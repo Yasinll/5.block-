@@ -7,16 +7,68 @@
 //
 
 #import "ViewController.h"
+#import "NextViewController.h"
 
 @interface ViewController ()
+
+@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UIButton *btn;
 
 @end
 
 @implementation ViewController
 
+- (UILabel *)label {
+    
+    if (_label == nil) {
+        
+        _label = [[UILabel alloc] initWithFrame:CGRectMake(100, 200, 200, 40)];
+        _label.backgroundColor = [UIColor redColor];
+        _label.textColor = [UIColor blueColor];
+        
+    }
+    
+    return _label;
+    
+}
+
+- (UIButton *)btn {
+    
+    if (_btn == nil) {
+        
+        _btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 400, 200, 40)];
+        _btn.backgroundColor = [UIColor blueColor];
+        [_btn setTitle:@"NextView" forState:UIControlStateNormal];
+        
+        [_btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    
+    return _btn;
+}
+
+//跳转
+- (void)btnClick {
+    
+    NextViewController *nVC = [[NextViewController alloc] init];
+    
+    //接收block值
+    nVC.block = ^(NSString *str) {
+        
+        self.label.text = str;
+        
+    };
+    
+    [self presentViewController:nVC animated:YES completion:nil];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    [self.view addSubview:self.label];
+    [self.view addSubview:self.btn];
+    
 }
 
 
